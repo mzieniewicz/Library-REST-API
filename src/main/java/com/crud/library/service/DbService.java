@@ -33,8 +33,8 @@ public class DbService {
         return bookRepository.findAll();
     }
 
-    public Optional<Book> getBook(Long bookid) {
-        return bookRepository.findById(bookid);
+    public Optional<Book> getBook(Long bookId) {
+        return bookRepository.findById(bookId);
     }
 
     public Optional<Book> getBookTitle(String title) {
@@ -45,30 +45,31 @@ public class DbService {
         return bookRepository.findByAuthor(author);
     }
 
-    public Book saveBook(final Book book) {
-        return bookRepository.save(book);
-    }
+//    public Book saveBook(final Book book) {
+//        return bookRepository.save(book);
+//    }
 
-    public void deleteBook(final Long bookid) {
-        bookRepository.deleteById(bookid);
-    }
+//    public void deleteBook(final Long bookid) {
+//        bookRepository.deleteById(bookid);
+//    }
 
     public List<CopyOfBook> getAllCopies() {
         return copyRepository.findAll();
     }
 
-    public CopyOfBook getCopyById(final Long copyId) throws Exception {
-        return copyRepository.findById(copyId).orElseThrow(() -> new Exception());
+    public Optional<CopyOfBook> getCopyById(final Long copyId)  {
+        return copyRepository.findById(copyId);
     }
 
     public void deleteCopy(final Long copyId) {
         copyRepository.deleteById(copyId);
     }
+
     public CopyOfBook saveCopy(final CopyOfBook copyOfBook) {
         return copyRepository.save(copyOfBook);
     }
 
-    public void updateIsisEligible(Long copyId, boolean isEligible) throws Exception {
+    public void updateIsEligible(Long copyId, boolean isEligible) throws Exception {
         Optional<CopyOfBook> copy = copyRepository.findById(copyId);
         copy.get().isEligible();
         if(isEligible){
@@ -86,6 +87,7 @@ public class DbService {
     public Optional<Borrowing> getBorrowing(Long borrowingId) {
         return borrowingRepository.findById(borrowingId);
     }
+    
 
     public Borrowing saveBorrowing(final Borrowing borrowing) {
         return borrowingRepository.save(borrowing);
@@ -95,11 +97,4 @@ public class DbService {
         borrowingRepository.deleteById(borrowingId);
     }
 
-    public Optional<User> getRUser(Long userId) {
-        return userRepository.findById(userId);
-    }
-
-    public User saveUser(final User user) {
-        return userRepository.save(user);
-    }
 }

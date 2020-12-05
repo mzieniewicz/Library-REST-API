@@ -11,15 +11,16 @@ import java.time.LocalDate;
 @Getter
 public class BorrowingDto {
 
+    private long borrowingId;
     private long copyId;
     private long userId;
     private LocalDate borrowingTheCopyDate;
     private LocalDate returnOfTheCopyDate;
 
-    public BorrowingDto(long copyId, long userId) {
-        this.copyId = copyId;
-        this.userId = userId;
-        this.borrowingTheCopyDate = LocalDate.now();
+    public BorrowingDto(long borrowingId, LocalDate borrowingTheCopyDate, LocalDate returnOfTheCopyDate) {
+        this.borrowingId = borrowingId;
+        this.borrowingTheCopyDate = borrowingTheCopyDate;
+        this.returnOfTheCopyDate = returnOfTheCopyDate;
     }
 
     public void setReturnOfTheCopyDate(LocalDate returnOfTheCopyDate) {
