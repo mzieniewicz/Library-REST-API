@@ -18,15 +18,8 @@ public class Borrowing {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "BORROWING_ID", unique = true)
+    @Column(name = "ID", unique = true)
     private long borrowingId;
-
-    @NotNull
-    @Column(name = "BORROWING_DATE")
-    private LocalDate borrowingTheCopyDate;
-
-    @Column(name = "RETURN_DATE")
-    private LocalDate returnOfTheCopyDate;
 
     @NotNull
     @ManyToOne
@@ -38,13 +31,24 @@ public class Borrowing {
     @JoinColumn(name = "USER_ID")
     private User user;
 
-    public Borrowing(long borrowingId, LocalDate borrowingTheCopyDate, LocalDate returnOfTheCopyDate) {
+    @NotNull
+    @Column(name = "BORROWING_DATE")
+    private LocalDate borrowingTheCopyDate;
+
+    @Column(name = "RETURN_DATE")
+    private LocalDate returnOfTheCopyDate;
+
+
+    public Borrowing(long borrowingId, CopyOfBook copyOfBook, User user) {
         this.borrowingId = borrowingId;
+        this.copyOfBook = copyOfBook;
+        this.user = user;
         this.borrowingTheCopyDate = LocalDate.now();
         this.returnOfTheCopyDate = LocalDate.now().plusDays(30L);
     }
 
-    public void setReturnOfTheCopyDate(LocalDate returnOfTheCopyDate) {
-        this.returnOfTheCopyDate = returnOfTheCopyDate;
+    public void extendReturnOfTheCopyDate(LocalDate returnOfTheCopyDate) {
+        if(!returnOfTheCopyDate.isAfter(LocalDate.now()))
+        this.returnOfTheCopyDate=this.returnOfTheCopyDate.plusDays(30);
     }
 }

@@ -10,6 +10,7 @@ import com.crud.library.repository.CopyRepository;
 import com.crud.library.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -88,8 +89,14 @@ public class DbService {
         return borrowingRepository.findById(borrowingId);
     }
     
-
+    @Transactional
     public Borrowing saveBorrowing(final Borrowing borrowing) {
+        CopyOfBook copy = borrowing.getCopyOfBook();
+        if(copy.isEligible()){
+           copy.setEligible(false);
+        }else{
+            throw new CopyIsNotAvalible();
+        }
         return borrowingRepository.save(borrowing);
     }
 

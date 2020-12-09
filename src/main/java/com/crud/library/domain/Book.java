@@ -19,16 +19,16 @@ public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "BOOK_ID", unique = true)
+    @Column(name = "ID", unique = true)
     private long bookId;
 
-    @Column(name = "BOOK_TITLE")
+    @Column(name = "TITLE")
     private String title;
 
-    @Column(name = "BOOK_AUTHOR")
+    @Column(name = "AUTHOR")
     private String author;
 
-    @Column(name = "BOOK_YEAR_OF_PUBLICATION")
+    @Column(name = "YEAR_OF_PUBLICATION")
     private int yearOfPublication;
 
     @OneToMany(

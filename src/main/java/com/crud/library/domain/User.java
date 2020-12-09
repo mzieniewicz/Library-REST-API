@@ -21,7 +21,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    @Column(name = "USER_ID", unique = true)
+    @Column(name = "ID", unique = true)
     private long userId;
 
     @Column(name = "USERNAME")
@@ -33,13 +33,13 @@ public class User {
     @Column(name = "PESEL")
     private int pesel;
 
-    @Column(name = "USER_EMAIL")
+    @Column(name = "EMAIL")
     private String userEmail;
 
     @Column(name = "ACCOUNT_CREATION_DATE")
     private LocalDate accountCreationDate;
 
-    @Column(name = "ACCOUNT_CREATION_DATE")
+    @Column(name = "ACCOUNT_BALANCE")
     private BigDecimal accountBalance;
 
     @OneToMany(
@@ -49,7 +49,7 @@ public class User {
     )
     private List<Borrowing> borrowings = new ArrayList<>();
 
-    public User(long userId, String userName, String userSurname, int PESEL, String userEmail) {
+    public User(long userId, String userName, String userSurname, int pesel, String userEmail) {
         this.userId = userId;
         this.userName = userName;
         this.userSurname = userSurname;
