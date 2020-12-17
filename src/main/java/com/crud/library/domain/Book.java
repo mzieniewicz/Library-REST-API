@@ -9,12 +9,21 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+//@NamedQueries({
+//        @NamedQuery(
+//                name = "Book.findBookByTitleFragment",
+//                query = "FROM BOOK WHERE title LIKE CONCAT('%', :FRAGMENT, '%')"),
+//        @NamedQuery(
+//                name = "Book.findBookByAuthorFragment",
+//                query = "FROM BOOK WHERE author LIKE CONCAT('%', :FRAGMENT, '%')")
+//})
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Entity
 @Table(name = "BOOKS")
-public class Book {
+public final class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

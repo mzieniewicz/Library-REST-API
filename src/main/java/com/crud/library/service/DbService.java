@@ -38,21 +38,21 @@ public class DbService {
         return bookRepository.findById(bookId);
     }
 
-    public Optional<Book> getBookTitle(String title) {
+    public List<Book> getBookTitle(String title) {
         return bookRepository.findByTitle(title);
     }
 
-    public Optional<Book> getBookAuthor(String author) {
+    public List<Book> getBookAuthor(String author) {
         return bookRepository.findByAuthor(author);
     }
 
-//    public Book saveBook(final Book book) {
-//        return bookRepository.save(book);
-//    }
+    public Book saveBook(final Book book) {
+        return bookRepository.save(book);
+    }
 
-//    public void deleteBook(final Long bookid) {
-//        bookRepository.deleteById(bookid);
-//    }
+    public void deleteBook(final Long bookid) {
+        bookRepository.deleteById(bookid);
+    }
 
     public List<CopyOfBook> getAllCopies() {
         return copyRepository.findAll();
@@ -68,17 +68,6 @@ public class DbService {
 
     public CopyOfBook saveCopy(final CopyOfBook copyOfBook) {
         return copyRepository.save(copyOfBook);
-    }
-
-    public void updateIsEligible(Long copyId, boolean isEligible) throws Exception {
-        Optional<CopyOfBook> copy = copyRepository.findById(copyId);
-        copy.get().isEligible();
-        if(isEligible){
-            isEligible = false;
-        }else{
-            isEligible = true;
-        }
-        copyRepository.save(copy.orElseThrow(() -> new Exception()));
     }
 
     public List<Borrowing> getBorrowings() {
@@ -102,6 +91,26 @@ public class DbService {
 
     public void deleteBorrowing(Long borrowingId) {
         borrowingRepository.deleteById(borrowingId);
+    }
+
+    public List<User> getUsers() {
+        return userRepository.findAll();
+    }
+
+    public Optional<User> getUser(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+    public List<User> getUsersBySurname(String userSurname) {
+        return userRepository.findByUserSurname(userSurname);
+    }
+
+    public User saveUser(final User user) {
+        return userRepository.save(user);
+    }
+
+    public void deleteUser(final Long userId) {
+        userRepository.deleteById(userId);
     }
 
 }

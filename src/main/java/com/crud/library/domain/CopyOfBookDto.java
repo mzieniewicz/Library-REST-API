@@ -12,7 +12,7 @@ public class CopyOfBookDto {
 
     private long copyId;
     private boolean isEligible;
-    private BookDto bookDto;
+    private Book book;
 
     public CopyOfBookDto(long copyId, boolean isEligible) {
         this.copyId = copyId;

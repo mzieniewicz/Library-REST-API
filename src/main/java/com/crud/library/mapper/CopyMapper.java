@@ -13,18 +13,20 @@ public class CopyMapper {
     public CopyOfBook mapToCopyOfBook(final CopyOfBookDto copyOfBookDto) {
         return new CopyOfBook(
                 copyOfBookDto.getCopyId(),
-                copyOfBookDto.isEligible());
+                copyOfBookDto.isEligible(),
+                copyOfBookDto.getBook());
     }
 
     public CopyOfBookDto mapToCopyOfBookDto(final CopyOfBook copyOfBook) {
         return new CopyOfBookDto(
                 copyOfBook.getCopyId(),
-                copyOfBook.isEligible());
+                copyOfBook.isEligible(),
+                copyOfBook.getBook());
     }
 
     public List<CopyOfBookDto> mapToCopyOfBookDtoList(final List<CopyOfBook> copies) {
         return copies.stream()
-                .map(c -> new CopyOfBookDto(c.getCopyId(),c.isEligible()))
+                .map(c -> new CopyOfBookDto(c.getCopyId(),c.isEligible(),c.getBook()))
                 .collect(Collectors.toList());
     }
 }

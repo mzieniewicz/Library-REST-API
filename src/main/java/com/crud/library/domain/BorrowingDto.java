@@ -17,5 +17,14 @@ public class BorrowingDto {
     private LocalDate borrowingTheCopyDate;
     private LocalDate returnOfTheCopyDate;
 
+    public BorrowingDto(long borrowingId, CopyOfBook copyOfBook, User user) {
+        this.borrowingId = borrowingId;
+        this.copyOfBook = copyOfBook;
+        this.user = user;
+        this.borrowingTheCopyDate = LocalDate.now();
+        this.returnOfTheCopyDate = LocalDate.now().plusDays(30L);
+    }
+
+
 
 }

@@ -15,7 +15,7 @@ public class BorrowingMapper {
                 borrowingDto.getBorrowingId(),
                 borrowingDto.getCopyOfBook(),
                 borrowingDto.getUser(),
-                borrowingDto.getReturnOfTheCopyDate(),
+                borrowingDto.getBorrowingTheCopyDate(),
                 borrowingDto.getReturnOfTheCopyDate()
         );
     }

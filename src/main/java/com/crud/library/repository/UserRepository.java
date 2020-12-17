@@ -1,6 +1,7 @@
 package com.crud.library.repository;
 
 
+import com.crud.library.domain.Book;
 import com.crud.library.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -27,4 +28,6 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Override
     long count();
+
+    List<User> findByUserSurname(String userSurname);
 }
