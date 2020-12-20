@@ -1,7 +1,9 @@
 package com.crud.library.service;
 
 import com.crud.library.domain.Book;
+import com.crud.library.domain.Borrowing;
 import com.crud.library.domain.CopyOfBook;
+import com.crud.library.domain.User;
 import com.crud.library.repository.BookRepository;
 import com.crud.library.repository.BorrowingRepository;
 import com.crud.library.repository.CopyRepository;
@@ -12,12 +14,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -77,6 +80,49 @@ public class DbServiceTestSuite {
         assertEquals(1L, resultBook.getBookId(), 0.01);
         assertEquals("title1", resultBook.getTitle());
         assertEquals("author1", resultBook.getAuthor());
+    }
+
+    @Test
+    public void saveBorrowingTest() {
+        //Given
+        User user = new User(13L, "name", "surname", 1234,"user@test.com");
+        CopyOfBook copy = new CopyOfBook(2L, true, new Book());
+        Borrowing borrowing = new Borrowing(12L, copy,user);
+        when(borrowingRepository.save(borrowing)).thenReturn(borrowing);
+        //When
+        Borrowing resultBorrowing = service.saveBorrowing(borrowing);
+        //Then
+        assertEquals(12L, resultBorrowing.getBorrowingId(), 0.01);
+        assertEquals(2L, resultBorrowing.getCopyOfBook().getCopyId());
+        assertEquals(1234, resultBorrowing.getUser().getPesel());
+    }
+
+    @Test
+    public void saveCopyTest() {
+        //Given
+        CopyOfBook copy = new CopyOfBook(2L, true, new Book());
+        when(copyRepository.save(copy)).thenReturn(copy);
+        //When
+        CopyOfBook resultCopy = service.saveCopy(copy);
+        //Then
+        assertEquals(2L, resultCopy.getCopyId());
+        assertTrue(resultCopy.isEligible());
+        assertEquals(0, resultCopy.getBook().getBookId());
+    }
+
+    @Test
+    public void saveUserTest() {
+        //Given
+        User user = new User(13L, "name", "surname", 1234,"user@test.com");
+        when(userRepository.save(user)).thenReturn(user);
+        //When
+        User resultUser = service.saveUser(user);
+        //Then
+        assertEquals(13L, resultUser.getUserId(), 0.01);
+        assertEquals("name", resultUser.getUserName());
+        assertEquals("user@test.com", resultUser.getUserEmail());
+        assertEquals(BigDecimal.ZERO, resultUser.getAccountBalance());
+        assertEquals(LocalDate.now(), resultUser.getAccountCreationDate());
     }
 
 }

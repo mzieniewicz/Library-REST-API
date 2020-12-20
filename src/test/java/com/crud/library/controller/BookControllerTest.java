@@ -3,6 +3,7 @@ package com.crud.library.controller;
 import com.crud.library.domain.Book;
 import com.crud.library.domain.BookDto;
 import com.crud.library.domain.CopyOfBook;
+import com.crud.library.facade.SearchingFacade;
 import com.crud.library.mapper.BookMapper;
 import com.crud.library.service.DbService;
 import com.google.gson.Gson;
@@ -42,6 +43,9 @@ class BookControllerTest {
 
     @MockBean
     private BookMapper bookMapper;
+
+    @MockBean
+    private SearchingFacade searchingFacade;
 
     @Test
     void getEmptyBooksTest() throws Exception {
@@ -98,7 +102,6 @@ class BookControllerTest {
                 .andExpect(jsonPath("$.copies[0].copyId", is(0)));
     }
 
-
     @Test
     void getBookByTitleTest() throws Exception {
         //Given
@@ -106,7 +109,7 @@ class BookControllerTest {
         bookDtos.add(new BookDto(1L, "title1", "author1", 1999, new ArrayList<>()));
         String title = "title1";
 
-        when(bookMapper.mapToBookDtoList(service.getBookTitle(title))).thenReturn(bookDtos);
+        when(searchingFacade.searchBookTitle(title)).thenReturn(bookDtos);
 
         //When & Then
         mockMvc.perform(get("/v1/books/getByTitle/title1")
@@ -128,7 +131,7 @@ class BookControllerTest {
         bookDtos.add(new BookDto(2L, "title2", "author2", 2011, new ArrayList<>()));
         String author = "author2";
 
-        when(bookMapper.mapToBookDtoList(service.getBookAuthor(author))).thenReturn(bookDtos);
+        when(searchingFacade.searchBookAuthor(author)).thenReturn(bookDtos);
 
         //When & Then
         mockMvc.perform(get("/v1/books/getByAuthor/author2")

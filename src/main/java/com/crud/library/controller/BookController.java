@@ -1,16 +1,14 @@
 package com.crud.library.controller;
 
-
 import com.crud.library.domain.BookDto;
-
+import com.crud.library.facade.SearchException;
+import com.crud.library.facade.SearchingFacade;
 import com.crud.library.mapper.BookMapper;
 import com.crud.library.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -25,6 +23,9 @@ public class BookController {
     @Autowired
     private BookMapper bookMapper;
 
+    @Autowired
+    private SearchingFacade searchingFacade;
+
     @RequestMapping(method = RequestMethod.GET, value = "/books")
     public List<BookDto> getBooks() {
         return bookMapper.mapToBookDtoList(service.getAllBooks());
@@ -36,19 +37,13 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/books/getByTitle/{title}")
-    public List<BookDto> getBookTitle(@PathVariable String title) {
-        List<BookDto> bookDtos = bookMapper.mapToBookDtoList(service.getAllBooks()).stream()
-                .filter(b -> b.getTitle().contains(title))
-                .collect(Collectors.toList());
-        return bookDtos;
+    public List<BookDto> getBookTitle(@PathVariable String title) throws SearchException {
+        return searchingFacade.searchBookTitle(title);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/books/getByAuthor/{author}")
-    public List<BookDto> getBookAuthor(@PathVariable String author) {
-        List<BookDto> bookDtos = bookMapper.mapToBookDtoList(service.getAllBooks()).stream()
-                .filter(b -> b.getAuthor().contains(author))
-                .collect(Collectors.toList());
-        return bookDtos;
+    public List<BookDto> getBookAuthor(@PathVariable String author) throws SearchException {
+        return searchingFacade.searchBookAuthor(author);
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/books/{bookId}")

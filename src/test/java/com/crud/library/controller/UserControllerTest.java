@@ -1,6 +1,7 @@
 package com.crud.library.controller;
 
 import com.crud.library.domain.*;
+import com.crud.library.facade.SearchingFacade;
 import com.crud.library.mapper.UserMapper;
 import com.crud.library.service.DbService;
 import com.google.gson.Gson;
@@ -40,6 +41,9 @@ public class UserControllerTest {
     @MockBean
     private UserMapper userMapper;
 
+    @MockBean
+    private SearchingFacade searchingFacade;
+
     @Test
     void getEmptyUsersTest() throws Exception {
         //Given
@@ -51,12 +55,13 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
+
     @Test
     void getUsersTest() throws Exception {
         //Given
         List<UserDto> userDtos = new ArrayList<>();
         userDtos.add(new UserDto());
-        userDtos.add(new UserDto(1L, "name", "surname1", 1234,"user@test.com", LocalDate.now(), BigDecimal.TEN, new ArrayList<>()));
+        userDtos.add(new UserDto(1L, "name", "surname1", 1234, "user@test.com", LocalDate.now(), BigDecimal.TEN, new ArrayList<>()));
         userDtos.add(new UserDto());
         when(userMapper.mapToUserDtoList(service.getUsers())).thenReturn(userDtos);
 
@@ -76,8 +81,8 @@ public class UserControllerTest {
     @Test
     void getUserByIdTest() throws Exception {
         //Given
-        UserDto userDto = new UserDto(13L, "name", "surname", 1234,"user@test.com");
-        User user = new User(13L, "name", "surname", 1234,"user@test.com");
+        UserDto userDto = new UserDto(13L, "name", "surname", 1234, "user@test.com");
+        User user = new User(13L, "name", "surname", 1234, "user@test.com");
         Long userId = 13L;
         when(userMapper.mapToUserDto(user)).thenReturn(userDto);
         when(service.getUser(userId)).thenReturn(Optional.of(user));
@@ -99,10 +104,10 @@ public class UserControllerTest {
     void getUsersBySurnameTest() throws Exception {
         //Given
         List<UserDto> userDtos = new ArrayList<>();
-        userDtos.add(new UserDto(12L, "name12", "surname12", 888,"user@test.com"));
-        String userSurname = "author2";
+        userDtos.add(new UserDto(12L, "name12", "surname12", 888, "user@test.com"));
+        String userSurname = "surname12";
 
-        when(userMapper.mapToUserDtoList(service.getUsersBySurname(userSurname))).thenReturn(userDtos);
+        when(searchingFacade.searchUsersBySurname(userSurname)).thenReturn(userDtos);
 
         //When & Then
         mockMvc.perform(get("/v1/users/getBySurname/surname12")
@@ -117,7 +122,6 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$[0].pesel", is(888)))
                 .andExpect(jsonPath("$[0].userEmail", is("user@test.com")));
     }
-
 
     @Test
     public void deleteNoUserTest() throws Exception {

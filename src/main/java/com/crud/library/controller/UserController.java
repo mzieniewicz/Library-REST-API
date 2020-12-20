@@ -1,14 +1,14 @@
 package com.crud.library.controller;
 
-import com.crud.library.domain.BookDto;
 import com.crud.library.domain.UserDto;
+import com.crud.library.facade.SearchException;
+import com.crud.library.facade.SearchingFacade;
 import com.crud.library.mapper.UserMapper;
 import com.crud.library.service.DbService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
-import java.util.stream.Collectors;
+
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -23,6 +23,9 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private SearchingFacade searchingFacade;
+
     @RequestMapping(method = RequestMethod.GET, value = "/users")
     public List<UserDto> getUsers() {
         return userMapper.mapToUserDtoList(service.getUsers());
@@ -34,11 +37,8 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/users/getBySurname/{userSurname}")
-    public List<UserDto> getUsersBySurname(@PathVariable String userSurname) {
-        List<UserDto> userDtos = userMapper.mapToUserDtoList(service.getUsers()).stream()
-                .filter(u -> u.getUserSurname().contains(userSurname))
-                .collect(Collectors.toList());
-        return userDtos;
+    public List<UserDto> getUsersBySurname(@PathVariable String userSurname) throws SearchException {
+        return searchingFacade.searchUsersBySurname(userSurname);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/users", consumes = APPLICATION_JSON_VALUE)
