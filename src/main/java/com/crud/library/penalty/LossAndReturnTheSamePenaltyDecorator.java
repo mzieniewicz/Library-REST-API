@@ -7,6 +7,7 @@ public class LossAndReturnTheSamePenaltyDecorator extends AbstractPenaltyDecorat
     protected LossAndReturnTheSamePenaltyDecorator(Penalty penalty) {
         super(penalty);
     }
+
     @Override
     public BigDecimal getCost() {
         return super.getCost().add(new BigDecimal(10));

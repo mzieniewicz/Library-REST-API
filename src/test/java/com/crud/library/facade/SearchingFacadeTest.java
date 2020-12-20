@@ -43,6 +43,7 @@ class SearchingFacadeTest {
         assertNotNull(resultList);
         assertEquals(2, resultList.size());
     }
+
     @Test
     public void  searchBookAuthorTest() throws SearchException{
         //Given
@@ -58,6 +59,7 @@ class SearchingFacadeTest {
         assertNotNull(resultList);
         assertEquals(3, resultList.size());
     }
+
     @Test
     public void  searchUsersBySurnameTest() throws SearchException{
         //Given

@@ -3,6 +3,7 @@ package com.crud.library.penalty;
 import java.math.BigDecimal;
 
 public class BasicPenalty implements Penalty {
+
     @Override
     public BigDecimal getCost() {
         return new BigDecimal(15);

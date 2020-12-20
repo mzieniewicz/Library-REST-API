@@ -1,12 +1,9 @@
 package com.crud.library.facade;
 
-import com.crud.library.domain.Book;
 import com.crud.library.domain.BookDto;
 import com.crud.library.domain.UserDto;
 import com.crud.library.mapper.BookMapper;
 import com.crud.library.mapper.UserMapper;
-import com.crud.library.repository.BookRepository;
-import com.crud.library.repository.UserRepository;
 import com.crud.library.service.DbService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -3,6 +3,7 @@ package com.crud.library.penalty;
 import java.math.BigDecimal;
 
 public  abstract class AbstractPenaltyDecorator implements Penalty {
+
     private final Penalty penalty;
 
     protected AbstractPenaltyDecorator(Penalty penalty) {
@@ -19,3 +20,5 @@ public  abstract class AbstractPenaltyDecorator implements Penalty {
         return penalty.getDescription();
     }
 }
+
+

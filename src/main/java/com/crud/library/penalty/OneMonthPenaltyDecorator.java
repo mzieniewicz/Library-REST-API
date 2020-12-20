@@ -7,6 +7,7 @@ public class OneMonthPenaltyDecorator extends AbstractPenaltyDecorator {
     protected OneMonthPenaltyDecorator(Penalty penalty) {
         super(penalty);
     }
+
     @Override
     public BigDecimal getCost() {
         return super.getCost().add(new BigDecimal(3));

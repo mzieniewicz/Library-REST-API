@@ -3,6 +3,7 @@ package com.crud.library.penalty;
 import java.math.BigDecimal;
 
 public class LosingABookPenaltyDecorator extends AbstractPenaltyDecorator {
+
     protected LosingABookPenaltyDecorator(Penalty penalty) {
         super(penalty);
     }
