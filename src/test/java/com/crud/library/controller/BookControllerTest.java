@@ -65,6 +65,7 @@ class BookControllerTest {
         List<BookDto> bookDtos = new ArrayList<>();
         bookDtos.add(new BookDto());
         bookDtos.add(new BookDto(1L, "title1", "author1", 1999, new ArrayList<>()));
+
         when(bookMapper.mapToBookDtoList(service.getAllBooks())).thenReturn(bookDtos);
 
         //When & Then
